@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Результаты распознавания бургер-меню</title>
+  </head>
+  <body>
+    <h1>{{ result_text }}</h1>
+    {% if result_image %}
+      <img src="data:image/png;base64,{{ result_image }}" alt="Выделенное бургер-меню">
+    {% endif %}
+  </body>
+</html>

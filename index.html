@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Распознавание бургер-меню</title>
+</head>
+
+<body>
+  <h1>Распознавание бургер-меню</h1>
+
+  <form id="form">
+    <input type="file" id="file-input" name="image" accept="image/*">
+    <button type="submit" id="submit" disabled>Распознать</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    const form = document.getElementById('form');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append('image', document.getElementById('file-input').files[0]);
+
+      fetch('/predict', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          const result = document.getElementById('result');
+          result.innerHTML = `<img src="${data.result}">`;
+        })
+        .catch(error => console.log(error));
+    });
+
+    // активируем кнопку после выбора файла
+    const fileInput = document.getElementById('file-input');
+    fileInput.addEventListener('change', () => {
+      document.getElementById('submit').disabled = false;
+    });
+  </script>
+</body>
+
+</html>
